@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate realistic fake addresses for USA, Canada, and United Kingdom. Perfect for testing, demos, and development purposes. Fast, reliable, and completely free.">
+    <meta name="keywords" content="fake address generator, random address, test address, USA, Canada, UK, postal code">
+    <meta name="author" content="Fake Address Generator">
+    <meta name="theme-color" content="#0f172a">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Fake Address Generator - Free Random Addresses">
+    <meta property="og:description" content="Generate realistic fake addresses for USA, Canada, and United Kingdom in seconds.">
+    <meta property="og:image" content="https://fakeaddress.github.io/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Fake Address Generator">
+    <meta name="twitter:description" content="Generate realistic fake addresses instantly">
+    <title>Fake Address Generator - Free Random Addresses for USA, Canada & UK</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="apple-touch-icon" href="/apple-icon.png">
+    <link rel="canonical" href="https://fakeaddress.github.io">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d9ff;
+            --primary-dark: #0099cc;
+            --secondary: #7c3aed;
+            --accent: #ec4899;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --border: #475569;
+            --success: #10b981;
+            --error: #ef4444;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--surface);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--secondary);
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary);
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        nav {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-icon {
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .toggle-sidebar {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: -300px;
+            top: 70px;
+            width: 300px;
+            height: calc(100vh - 70px);
+            background: rgba(30, 41, 59, 0.95);
+            backdrop-filter: blur(10px);
+            border-right: 1px solid var(--border);
+            padding: 2rem 0;
+            transition: left 0.3s ease;
+            z-index: 900;
+            overflow-y: auto;
+        }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+        .sidebar-section {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .sidebar-section h3 {
+            padding: 0 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .sidebar-links {
+            list-style: none;
+        }
+
+        .sidebar-links li {
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-links a {
+            display: block;
+            padding: 0.75rem 1.5rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-links a:hover {
+            padding-left: 2rem;
+            color: var(--primary);
+            background: rgba(0, 217, 255, 0.1);
+        }
+
+        /* Main Content */
+        main {
+            margin-left: 0;
+            transition: margin-left 0.3s ease;
+        }
+
+        main.sidebar-open {
+            margin-left: 300px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(0, 217, 255, 0.1), transparent);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -5%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(124, 58, 237, 0.1), transparent);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 1;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeIn 0.8s ease-out 0.2s both;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeIn 0.8s ease-out 0.4s both;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            border: 2px solid var(--border);
+            background: var(--surface);
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border-color: var(--primary);
+            color: var(--background);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 217, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(236, 72, 153, 0.1);
+            transform: translateY(-3px);
+        }
+
+        /* Sections */
+        section {
+            padding: 5rem 2rem;
+            scroll-margin-top: 70px;
+        }
+
+        section h2 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            margin-bottom: 3rem;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        section h2 span {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 15px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 0.9);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 217, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .feature-card p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Generator Section */
+        .generator {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 3rem 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .form-group select:hover {
+            border-color: var(--primary);
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 217, 255, 0.1);
+        }
+
+        /* Results */
+        .results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .result-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            word-break: break-all;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .result-label {
+            font-size: 0.85rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .result-value {
+            font-size: 1rem;
+            color: var(--text-primary);
+            font-weight: 500;
+            word-break: break-word;
+        }
+
+        .copy-btn {
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--primary);
+            color: var(--background);
+        }
+
+        .copy-btn.copied {
+            background: var(--success);
+            border-color: var(--success);
+            color: white;
+        }
+
+        /* Countries Grid */
+        .countries-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .country-card {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .country-card:hover {
+            border-color: var(--primary);
+            background: rgba(30, 41, 59, 0.9);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 217, 255, 0.1);
+        }
+
+        .country-flag {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .country-card h3 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .country-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        /* Stats Section */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2rem;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(30, 41, 59, 0.6);
+            border-top: 1px solid var(--border);
+            padding: 4rem 2rem 2rem;
+            margin-top: 5rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-section a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .footer-section a:hover {
+            color: var(--primary);
+            padding-left: 0.5rem;
+        }
+
+        .footer-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 217, 255, 0.1);
+            border: 1px solid var(--primary);
+            border-radius: 50%;
+            color: var(--primary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--background);
+            transform: translateY(-3px);
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0px); }
+            50% { transform: translate(0, 20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(0, 217, 255, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(0, 217, 255, 0.8); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .toggle-sidebar {
+                display: block;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                min-height: 80vh;
+                padding: 2rem 1rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .generator {
+                padding: 1.5rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .countries-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .sidebar {
+                width: 280px;
+                left: -280px;
+            }
+
+            main.sidebar-open {
+                margin-left: 280px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .countries-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .generator {
+                padding: 1rem;
+            }
+
+            .btn {
+                padding: 0.75rem 1.5rem;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo" onclick="scrollToSection('hero')">
+                <span class="logo-icon">🎯</span>
+                <span>FakeGen</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#generator">Generator</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#countries">Countries</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <button class="toggle-sidebar" onclick="toggleSidebar()">☰</button>
+        </nav>
+    </header>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-section">
+            <h3>Generator</h3>
+            <ul class="sidebar-links">
+                <li><a href="#generator" onclick="toggleSidebar()">Generate Addresses</a></li>
+                <li><a href="#countries" onclick="toggleSidebar()">Browse Countries</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <h3>Tools</h3>
+            <ul class="sidebar-links">
+                <li><a href="#usa" onclick="toggleSidebar()">USA</a></li>
+                <li><a href="#canada" onclick="toggleSidebar()">Canada</a></li>
+                <li><a href="#uk" onclick="toggleSidebar()">United Kingdom</a></li>
+            </ul>
+        </div>
+
+        <div class="sidebar-section">
+            <h3>Pages</h3>
+            <ul class="sidebar-links">
+                <li><a href="#features" onclick="toggleSidebar()">Features</a></li>
+                <li><a href="#about" onclick="toggleSidebar()">About Us</a></li>
+                <li><a href="#faq" onclick="toggleSidebar()">FAQ</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero">
+            <div class="hero-content">
+                <h1>Generate Fake Addresses Instantly</h1>
+                <p>Create realistic, random addresses for USA, Canada, and United Kingdom in seconds. Perfect for testing, development, and more.</p>
+                <div class="hero-buttons">
+                    <a href="#generator" class="btn btn-primary">Start Generating →</a>
+                    <a href="#features" class="btn btn-secondary">Learn More</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Generator Section -->
+        <section id="generator" class="container">
+            <h2>Address <span>Generator</span></h2>
+            
+            <div class="generator">
+                <div class="form-group">
+                    <label for="country">Select Country</label>
+                    <select id="country" onchange="updateStates()">
+                        <option value="">Choose a Country</option>
+                        <option value="usa">United States</option>
+                        <option value="canada">Canada</option>
+                        <option value="uk">United Kingdom</option>
+                    </select>
+                </div>
+
+                <div class="form-group" id="stateGroup" style="display: none;">
+                    <label for="state">Select State/Province</label>
+                    <select id="state">
+                        <option value="">Choose a State/Province</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary" style="width: 100%; justify-content: center;" onclick="generateAddress()">Generate Address</button>
+            </div>
+
+            <div id="resultsContainer" style="display: none;">
+                <div class="results">
+                    <div class="result-card">
+                        <div class="result-label">Street Address</div>
+                        <div class="result-value" id="street">-</div>
+                        <button class="copy-btn" onclick="copyToClipboard('street', this)">Copy</button>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">City</div>
+                        <div class="result-value" id="city">-</div>
+                        <button class="copy-btn" onclick="copyToClipboard('city', this)">Copy</button>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">State/Province</div>
+                        <div class="result-value" id="state-result">-</div>
+                        <button class="copy-btn" onclick="copyToClipboard('state-result', this)">Copy</button>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Postal Code</div>
+                        <div class="result-value" id="postal">-</div>
+                        <button class="copy-btn" onclick="copyToClipboard('postal', this)">Copy</button>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Country</div>
+                        <div class="result-value" id="country-result">-</div>
+                        <button class="copy-btn" onclick="copyToClipboard('country-result', this)">Copy</button>
+                    </div>
+                    <div class="result-card">
+                        <div class="result-label">Full Address</div>
+                        <div class="result-value" id="fullAddress">-</div>
+                        <button class="copy-btn" onclick="copyToClipboard('fullAddress', this)">Copy</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="container">
+            <h2>Why Choose <span>FakeGen</span></h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Lightning Fast</h3>
+                    <p>Generate addresses in milliseconds. No delays, no waiting. Instant results every time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>100% Realistic</h3>
+                    <p>Our addresses are created using real data patterns. Indistinguishable from genuine addresses.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Private & Secure</h3>
+                    <p>All generation happens on your device. We don't store or track any data you generate.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Multiple Countries</h3>
+                    <p>Support for USA, Canada, and United Kingdom with detailed state/province data.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h3>Easy Copy</h3>
+                    <p>One-click copy functionality. Export entire addresses or individual components instantly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Modern Design</h3>
+                    <p>Beautiful, responsive interface works perfectly on desktop, tablet, and mobile devices.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countries Section -->
+        <section id="countries" class="container">
+            <h2>Supported <span>Countries</span></h2>
+            <div class="countries-grid">
+                <div class="country-card" onclick="selectCountry('usa')">
+                    <div class="country-flag">🇺🇸</div>
+                    <h3>United States</h3>
+                    <p>50 States + DC</p>
+                </div>
+                <div class="country-card" onclick="selectCountry('canada')">
+                    <div class="country-flag">🇨🇦</div>
+                    <h3>Canada</h3>
+                    <p>10 Provinces + 3 Territories</p>
+                </div>
+                <div class="country-card" onclick="selectCountry('uk')">
+                    <div class="country-flag">🇬🇧</div>
+                    <h3>United Kingdom</h3>
+                    <p>England, Scotland, Wales & N. Ireland</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats Section -->
+        <section id="stats" class="container">
+            <h2>Our <span>Impact</span></h2>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">Addresses Generated</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">150K+</div>
+                    <div class="stat-label">Active Users</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">99.9%</div>
+                    <div class="stat-label">Uptime</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Available</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="container">
+            <h2>About <span>FakeGen</span></h2>
+            <div class="generator" style="text-align: center; margin-top: 3rem;">
+                <p style="color: var(--text-secondary); margin-bottom: 1.5rem; line-height: 1.8;">
+                    FakeGen is the leading fake address generator trusted by developers, testers, and businesses worldwide. 
+                    Our platform provides realistic, randomized addresses for testing purposes, development, and more. 
+                    Built with modern technology and a focus on user experience, we're committed to providing the fastest, 
+                    most reliable address generation service available.
+                </p>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="#" class="btn btn-primary">Get Support</a>
+                    <a href="#" class="btn btn-secondary">View Documentation</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="container">
+            <h2>Frequently Asked <span>Questions</span></h2>
+            <div style="max-width: 800px; margin: 3rem auto;">
+                <div class="feature-card" style="margin-bottom: 1.5rem;">
+                    <h3>Is it legal to use fake addresses?</h3>
+                    <p>Yes, generating fake addresses for testing purposes is completely legal. However, never use them for fraudulent activities or to deceive anyone.</p>
+                </div>
+                <div class="feature-card" style="margin-bottom: 1.5rem;">
+                    <h3>Are these real addresses?</h3>
+                    <p>No, these are randomly generated addresses that follow real formatting patterns. They may coincidentally match real addresses but are not guaranteed.</p>
+                </div>
+                <div class="feature-card" style="margin-bottom: 1.5rem;">
+                    <h3>Can I export the data?</h3>
+                    <p>Yes, you can copy individual fields or entire addresses. For bulk exports, please contact our support team.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>Is my data stored?</h3>
+                    <p>No, all generation happens locally on your device. We don't collect, store, or track any generated addresses.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About</h3>
+                <p>FakeGen is the world's most reliable fake address generator. Trusted by thousands of developers and businesses for testing and development.</p>
+                <div class="social-links">
+                    <a href="#">Twitter</a>
+                    <a href="#">GitHub</a>
+                    <a href="#">LinkedIn</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h3>Pages</h3>
+                <ul>
+                    <li><a href="#generator">Generator</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#countries">Countries</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Countries</h3>
+                <ul>
+                    <li><a href="#usa">United States</a></li>
+                    <li><a href="#canada">Canada</a></li>
+                    <li><a href="#uk">United Kingdom</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="#">Documentation</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 FakeGen. All rights reserved. | Made with ❤️ for developers</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data
+        const addressData = {
+            usa: {
+                states: {
+                    'AL': { name: 'Alabama', cities: ['Birmingham', 'Montgomery', 'Mobile', 'Huntsville', 'Tuscaloosa'] },
+                    'AK': { name: 'Alaska', cities: ['Anchorage', 'Juneau', 'Fairbanks', 'Ketchikan', 'Sitka'] },
+                    'AZ': { name: 'Arizona', cities: ['Phoenix', 'Mesa', 'Chandler', 'Scottsdale', 'Tucson'] },
+                    'AR': { name: 'Arkansas', cities: ['Little Rock', 'Fayetteville', 'Fort Smith', 'Springdale', 'Jonesboro'] },
+                    'CA': { name: 'California', cities: ['Los Angeles', 'San Francisco', 'San Diego', 'Sacramento', 'Oakland'] },
+                    'CO': { name: 'Colorado', cities: ['Denver', 'Colorado Springs', 'Aurora', 'Fort Collins', 'Lakewood'] },
+                    'CT': { name: 'Connecticut', cities: ['Bridgeport', 'New Haven', 'Hartford', 'Stamford', 'Waterbury'] },
+                    'DE': { name: 'Delaware', cities: ['Wilmington', 'Dover', 'Newark', 'Smyrna', 'Middletown'] },
+                    'FL': { name: 'Florida', cities: ['Jacksonville', 'Miami', 'Tampa', 'Orlando', 'St. Petersburg'] },
+                    'GA': { name: 'Georgia', cities: ['Atlanta', 'Augusta', 'Savannah', 'Columbus', 'Marietta'] },
+                    'HI': { name: 'Hawaii', cities: ['Honolulu', 'Hilo', 'Kailua', 'Kaneohe', 'Waipahu'] },
+                    'ID': { name: 'Idaho', cities: ['Boise', 'Nampa', 'Meridian', 'Pocatello', 'Caldwell'] },
+                    'IL': { name: 'Illinois', cities: ['Chicago', 'Aurora', 'Rockford', 'Joliet', 'Naperville'] },
+                    'IN': { name: 'Indiana', cities: ['Indianapolis', 'Fort Wayne', 'Evansville', 'South Bend', 'Bloomington'] },
+                    'IA': { name: 'Iowa', cities: ['Des Moines', 'Cedar Rapids', 'Davenport', 'Sioux City', 'Iowa City'] },
+                    'KS': { name: 'Kansas', cities: ['Kansas City', 'Wichita', 'Overland Park', 'Topeka', 'Lawrence'] },
+                    'KY': { name: 'Kentucky', cities: ['Louisville', 'Lexington', 'Bowling Green', 'Owensboro', 'Covington'] },
+                    'LA': { name: 'Louisiana', cities: ['New Orleans', 'Baton Rouge', 'Shreveport', 'Lafayette', 'Lake Charles'] },
+                    'ME': { name: 'Maine', cities: ['Portland', 'Lewiston', 'Bangor', 'South Portland', 'Auburn'] },
+                    'MD': { name: 'Maryland', cities: ['Baltimore', 'Columbia', 'Gaithersburg', 'Bethesda', 'Glen Burnie'] },
+                    'MA': { name: 'Massachusetts', cities: ['Boston', 'Worcester', 'Springfield', 'Cambridge', 'Lowell'] },
+                    'MI': { name: 'Michigan', cities: ['Detroit', 'Grand Rapids', 'Warren', 'Sterling Heights', 'Ann Arbor'] },
+                    'MN': { name: 'Minnesota', cities: ['Minneapolis', 'Saint Paul', 'Rochester', 'Duluth', 'Bloomington'] },
+                    'MS': { name: 'Mississippi', cities: ['Jackson', 'Gulfport', 'Biloxi', 'Hattiesburg', 'Meridian'] },
+                    'MO': { name: 'Missouri', cities: ['Kansas City', 'Saint Louis', 'Springfield', 'Independence', 'Columbia'] },
+                    'MT': { name: 'Montana', cities: ['Billings', 'Missoula', 'Great Falls', 'Bozeman', 'Butte'] },
+                    'NE': { name: 'Nebraska', cities: ['Omaha', 'Lincoln', 'Bellevue', 'Grand Island', 'Kearney'] },
+                    'NV': { name: 'Nevada', cities: ['Las Vegas', 'Henderson', 'Reno', 'North Las Vegas', 'Sparks'] },
+                    'NH': { name: 'New Hampshire', cities: ['Manchester', 'Nashua', 'Concord', 'Derry', 'Rochester'] },
+                    'NJ': { name: 'New Jersey', cities: ['Newark', 'Jersey City', 'Paterson', 'Elizabeth', 'Trenton'] },
+                    'NM': { name: 'New Mexico', cities: ['Albuquerque', 'Las Cruces', 'Santa Fe', 'Rio Rancho', 'Roswell'] },
+                    'NY': { name: 'New York', cities: ['New York City', 'Buffalo', 'Rochester', 'Yonkers', 'Syracuse'] },
+                    'NC': { name: 'North Carolina', cities: ['Charlotte', 'Raleigh', 'Greensboro', 'Durham', 'Winston-Salem'] },
+                    'ND': { name: 'North Dakota', cities: ['Bismarck', 'Fargo', 'Grand Forks', 'Minot', 'Williston'] },
+                    'OH': { name: 'Ohio', cities: ['Columbus', 'Cleveland', 'Cincinnati', 'Toledo', 'Akron'] },
+                    'OK': { name: 'Oklahoma', cities: ['Oklahoma City', 'Tulsa', 'Norman', 'Broken Arrow', 'Edmond'] },
+                    'OR': { name: 'Oregon', cities: ['Portland', 'Eugene', 'Salem', 'Gresham', 'Hillsboro'] },
+                    'PA': { name: 'Pennsylvania', cities: ['Philadelphia', 'Pittsburgh', 'Allentown', 'Erie', 'Reading'] },
+                    'RI': { name: 'Rhode Island', cities: ['Providence', 'Warwick', 'Cranston', 'Pawtucket', 'East Providence'] },
+                    'SC': { name: 'South Carolina', cities: ['Charleston', 'Columbia', 'Greenville', 'Summerville', 'North Charleston'] },
+                    'SD': { name: 'South Dakota', cities: ['Sioux Falls', 'Rapid City', 'Aberdeen', 'Brookings', 'Watertown'] },
+                    'TN': { name: 'Tennessee', cities: ['Memphis', 'Nashville', 'Knoxville', 'Chattanooga', 'Clarksville'] },
+                    'TX': { name: 'Texas', cities: ['Houston', 'San Antonio', 'Dallas', 'Austin', 'Fort Worth'] },
+                    'UT': { name: 'Utah', cities: ['Salt Lake City', 'Provo', 'West Valley City', 'Orem', 'Sandy'] },
+                    'VT': { name: 'Vermont', cities: ['Montpelier', 'Rutland', 'Brattleboro', 'Barre', 'St. Johnsbury'] },
+                    'VA': { name: 'Virginia', cities: ['Virginia Beach', 'Richmond', 'Arlington', 'Alexandria', 'Roanoke'] },
+                    'WA': { name: 'Washington', cities: ['Seattle', 'Spokane', 'Tacoma', 'Vancouver', 'Bellevue'] },
+                    'WV': { name: 'West Virginia', cities: ['Charleston', 'Huntington', 'Parkersburg', 'Morgantown', 'Wheeling'] },
+                    'WI': { name: 'Wisconsin', cities: ['Milwaukee', 'Madison', 'Green Bay', 'Kenosha', 'Racine'] },
+                    'WY': { name: 'Wyoming', cities: ['Cheyenne', 'Laramie', 'Gillette', 'Rock Springs', 'Sheridan'] },
+                    'DC': { name: 'District of Columbia', cities: ['Washington'] }
+                }
+            },
+            canada: {
+                states: {
+                    'AB': { name: 'Alberta', cities: ['Calgary', 'Edmonton', 'Red Deer', 'Lethbridge', 'Grande Prairie'] },
+                    'BC': { name: 'British Columbia', cities: ['Vancouver', 'Victoria', 'Surrey', 'Burnaby', 'Kelowna'] },
+                    'MB': { name: 'Manitoba', cities: ['Winnipeg', 'Brandon', 'Missoula', 'Thompson', 'Portage la Prairie'] },
+                    'NB': { name: 'New Brunswick', cities: ['Moncton', 'Saint John', 'Fredericton', 'Bathurst', 'Edmundston'] },
+                    'NL': { name: 'Newfoundland and Labrador', cities: ['St. John\'s', 'Corner Brook', 'Gander', 'Happy Valley-Goose Bay', 'Labrador City'] },
+                    'NS': { name: 'Nova Scotia', cities: ['Halifax', 'Cape Breton Regional Municipality', 'Glace Bay', 'Dartmouth', 'Sydney'] },
+                    'ON': { name: 'Ontario', cities: ['Toronto', 'Ottawa', 'Hamilton', 'London', 'Mississauga'] },
+                    'PE': { name: 'Prince Edward Island', cities: ['Charlottetown', 'Summerside', 'Stratford', 'Cornwall', 'Montague'] },
+                    'QC': { name: 'Quebec', cities: ['Montreal', 'Quebec City', 'Gatineau', 'Longueuil', 'Laval'] },
+                    'SK': { name: 'Saskatchewan', cities: ['Saskatoon', 'Regina', 'Prince Albert', 'Moose Jaw', 'Yorkton'] },
+                    'NT': { name: 'Northwest Territories', cities: ['Yellowknife', 'Hay River', 'Inuvik', 'Fort Smith', 'Dettah'] },
+                    'NU': { name: 'Nunavut', cities: ['Iqaluit', 'Rankin Inlet', 'Arviat', 'Cambridge Bay', 'Igloolik'] },
+                    'YT': { name: 'Yukon', cities: ['Whitehorse', 'Dawson', 'Watson Lake', 'Haines Junction', 'Carmacks'] }
+                }
+            },
+            uk: {
+                states: {
+                    'ENG': { name: 'England', cities: ['London', 'Birmingham', 'Leeds', 'Manchester', 'Bristol'] },
+                    'SCT': { name: 'Scotland', cities: ['Edinburgh', 'Glasgow', 'Aberdeen', 'Dundee', 'Stirling'] },
+                    'WLS': { name: 'Wales', cities: ['Cardiff', 'Swansea', 'Newport', 'Bangor', 'Wrexham'] },
+                    'NIR': { name: 'Northern Ireland', cities: ['Belfast', 'Derry', 'Armagh', 'Newry', 'Lisburn'] }
+                }
+            }
+        };
+
+        // Street names for random addresses
+        const streetNames = ['Main', 'Oak', 'Elm', 'Maple', 'Pine', 'Cedar', 'Birch', 'Willow', 'Ash', 'Spruce', 'Market', 'Court', 'Park', 'Bridge', 'Valley', 'Hill', 'Lake', 'River', 'Mountain', 'Forest'];
+        const streetSuffixes = ['Street', 'Avenue', 'Road', 'Boulevard', 'Lane', 'Drive', 'Court', 'Parkway', 'Circle', 'Square'];
+
+        let currentCountry = '';
+        let currentState = '';
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const main = document.querySelector('main');
+            sidebar.classList.toggle('active');
+            main.classList.toggle('sidebar-open');
+        }
+
+        function scrollToSection(id) {
+            document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function selectCountry(country) {
+            document.getElementById('country').value = country;
+            updateStates();
+            scrollToSection('generator');
+        }
+
+        function updateStates() {
+            const country = document.getElementById('country').value;
+            const stateSelect = document.getElementById('state');
+            const stateGroup = document.getElementById('stateGroup');
+            const resultsContainer = document.getElementById('resultsContainer');
+            
+            stateSelect.innerHTML = '<option value="">Choose a State/Province</option>';
+            resultsContainer.style.display = 'none';
+            currentCountry = country;
+
+            if (!country) {
+                stateGroup.style.display = 'none';
+                return;
+            }
+
+            stateGroup.style.display = 'block';
+            const states = addressData[country].states;
+            
+            for (const [code, data] of Object.entries(states)) {
+                const option = document.createElement('option');
+                option.value = code;
+                option.textContent = data.name;
+                stateSelect.appendChild(option);
+            }
+        }
+
+        function generateRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function generateAddress() {
+            const country = document.getElementById('country').value;
+            const state = document.getElementById('state').value;
+
+            if (!country || !state) {
+                alert('Please select both country and state/province');
+                return;
+            }
+
+            currentCountry = country;
+            currentState = state;
+
+            const states = addressData[country].states[state];
+            const city = states.cities[generateRandomNumber(0, states.cities.length - 1)];
+            const street = `${generateRandomNumber(1, 9999)} ${streetNames[generateRandomNumber(0, streetNames.length - 1)]} ${streetSuffixes[generateRandomNumber(0, streetSuffixes.length - 1)]}`;
+            
+            let postal;
+            let countryName;
+            
+            if (country === 'usa') {
+                postal = `${generateRandomNumber(10000, 99999)}`;
+                countryName = 'United States';
+            } else if (country === 'canada') {
+                const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                const numbers = '0123456789';
+                postal = `${letters[generateRandomNumber(0, 25)]}${numbers[generateRandomNumber(0, 9)]}${letters[generateRandomNumber(0, 25)]} ${numbers[generateRandomNumber(0, 9)]}${letters[generateRandomNumber(0, 25)]}${numbers[generateRandomNumber(0, 9)]}`;
+                countryName = 'Canada';
+            } else {
+                postal = '';
+                for (let i = 0; i < 6; i++) {
+                    if (Math.random() < 0.5) {
+                        postal += String.fromCharCode(generateRandomNumber(65, 90));
+                    } else {
+                        postal += generateRandomNumber(0, 9);
+                    }
+                }
+                countryName = 'United Kingdom';
+            }
+
+            const fullAddress = `${street}, ${city}, ${states.name}, ${postal}, ${countryName}`;
+
+            document.getElementById('street').textContent = street;
+            document.getElementById('city').textContent = city;
+            document.getElementById('state-result').textContent = states.name;
+            document.getElementById('postal').textContent = postal;
+            document.getElementById('country-result').textContent = countryName;
+            document.getElementById('fullAddress').textContent = fullAddress;
+
+            document.getElementById('resultsContainer').style.display = 'block';
+
+            // Scroll to results
+            setTimeout(() => {
+                document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        function copyToClipboard(elementId, button) {
+            const text = document.getElementById(elementId).textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.textContent;
+                button.textContent = '✓ Copied!';
+                button.classList.add('copied');
+                
+                setTimeout(() => {
+                    button.textContent = originalText;
+                    button.classList.remove('copied');
+                }, 2000);
+            });
+        }
+
+        // Close sidebar when clicking outside
+        document.addEventListener('click', (e) => {
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.querySelector('.toggle-sidebar');
+            
+            if (!sidebar.contains(e.target) && !toggleBtn.contains(e.target) && sidebar.classList.contains('active')) {
+                sidebar.classList.remove('active');
+                document.querySelector('main').classList.remove('sidebar-open');
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                document.getElementById('sidebar').classList.remove('active');
+                document.querySelector('main').classList.remove('sidebar-open');
+            }
+        });
+    </script>
+</body>
+</html>
